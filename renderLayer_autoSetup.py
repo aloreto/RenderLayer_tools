@@ -52,38 +52,32 @@ print(FG_layer_geos)
 # the expression line of the render layer setup window can only accept 'transforms' not 'shapes'
 
 for shapeName in BG_layer_geos:
-    currentTransform = cmds.listRelatives(shapeName, parent=True, type='transform')[0]
-    print(currentTransform)
+    currentBGTransform = cmds.listRelatives(shapeName, parent=True, type='transform')[0]
+    print(currentBGTransform)
 
-    BG_layer_transforms.append(currentTransform)
+    BG_layer_transforms.append(currentBGTransform)
     print(BG_layer_transforms)
     
     
+    
 for shapeName in STAGE_layer_geos:
-    currentTransform = cmds.listRelatives(shapeName, parent=True, type='transform')[0]
-    print(currentTransform)
+    currentSTAGETransform = cmds.listRelatives(shapeName, parent=True, type='transform')[0]
+    print(currentSTAGETransform)
 
-    STAGE_layer_transforms.append(currentTransform)    
+    STAGE_layer_transforms.append(currentSTAGETransform)  
+    print('THIS IS STAGE TRANSFORM')
+    print (STAGE_layer_transforms)  
+    
     
     
 for shapeName in FG_layer_geos:
-    currentTransform = cmds.listRelatives(shapeName, parent=True, type='transform')[0]
-    print(currentTransform)
+    currentFGTransform = cmds.listRelatives(shapeName, parent=True, type='transform')[0]
+    print(currentFGTransform)
 
-    STAGE_layer_transforms.append(FG_layer_transforms)     
-
-
-
-
-# layer names to create
-
-layerList_toCreate = [BG_layer,STAGE_layer,FG_layer, BG_shadow]
+    FG_layer_transforms.append(currentFGTransform)  
     
-for eachLayerName in layerList_toCreate:
-    
-    create_layer_pass(eachLayerName)
-
-        
+cmds.select(clear=True)       
+ 
 
 
 
@@ -135,13 +129,39 @@ def create_layer_pass(name):
  
         STAGE_layer_geos_expression = ''.join(str(','+item) for item in STAGE_layer_transforms)       
         
-        print('THIS IS THE EXPRESSION.......................')
+        print('THIS IS STAGE EXPRESSION.......................')
         print(STAGE_layer_geos_expression)
        
         c1.getSelector().setPattern(STAGE_layer_geos_expression)
         
     else:
-        print('name is not STAGE_layer')                               
+        print('name is not STAGE_layer') 
+
+
+    # FG LAYER
+
+    if name == FG_layer:
+ 
+        FG_layer_geos_expression = ''.join(str(','+item) for item in FG_layer_transforms)       
+        
+        print('THIS IS STAGE EXPRESSION.......................')
+        print(FG_layer_geos_expression)
+       
+        c1.getSelector().setPattern(FG_layer_geos_expression)
+        
+    else:
+        print('name is not FG_layer') 
+        
+        
+        
+# layer names to create
+
+layerList_toCreate = [BG_layer,STAGE_layer,FG_layer, BG_shadow]
+    
+for eachLayerName in layerList_toCreate:
+    
+    create_layer_pass(eachLayerName)
+                              
 
 
 
